@@ -1,25 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class DiceHandler : MonoBehaviour
 {
-    [SerializeField] private List<Dice> _dices;
+    [SerializeField] private List<Dice> _dices;          // Zarlar
+    [SerializeField] private List<TMP_Text> _diceTexts;  // Her zar için ayrı TMP_Text
 
-    private List<int> _results = new(); // Zar sonuçları burada saklanacak
     private bool _resultsRecorded = false;
 
     void Update()
     {
-        // Eğer tüm zarlar durduysa ve sonuçlar henüz alınmadıysa
         if (!_resultsRecorded && AllDicesStopped())
         {
-            _results.Clear();
-
-            foreach (Dice dice in _dices)
+            for (int i = 0; i < _dices.Count; i++)
             {
-                int number = dice.GetNumber();
-                _results.Add(number);
-                Debug.Log($"{dice.name} rolled: {number}");
+                int number = _dices[i].GetNumber();
+                _diceTexts[i].text = $"{number}";
             }
 
             _resultsRecorded = true; // Sonuçları bir kere alıyoruz
@@ -34,7 +31,4 @@ public class DiceHandler : MonoBehaviour
         }
         return true;
     }
-    public List<int> GetResults() => _results;
-
-
 }
