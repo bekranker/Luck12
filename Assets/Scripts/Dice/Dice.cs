@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class Dice : MonoBehaviour
@@ -13,10 +14,12 @@ public class Dice : MonoBehaviour
     [SerializeField] private Transform _side5;
     [SerializeField] private Transform _side6;
     public bool _showResult;
+    private Vector3 _localStartPos;
 
     void Start()
     {
         _rb.rotation = Random.rotation;
+        _localStartPos = transform.localPosition;
     }
     void Update()
     {
@@ -53,5 +56,9 @@ public class Dice : MonoBehaviour
 
         return bestIndex + 1; // 1-6 arası sayı
     }
-
+    public void ReturnStartPosition()
+    {
+        DOTween.Kill(transform);
+        transform.DOLocalMove(_localStartPos, .2f).SetEase(Ease.OutSine);
+    }
 }

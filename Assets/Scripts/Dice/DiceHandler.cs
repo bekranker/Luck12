@@ -54,6 +54,7 @@ public class DiceHandler : MonoBehaviour, IInitializable
         {
             _diceTexts[i].text = _dices[i].GetNumber().ToString();
         }
+        EventManager.Raise(new DiceRolled(_dices[0].GetNumber(), _dices[1].GetNumber()));
     }
 
     private bool AllDicesStopped()
@@ -72,13 +73,12 @@ public class DiceHandler : MonoBehaviour, IInitializable
 
         for (int i = 0; i < _dices.Count; i++)
         {
-            DOTween.Kill(_dices[i].transform);
             var rb = _dices[i].GetComponent<Rigidbody>();
             rb.useGravity = false;
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
             rb.isKinematic = true;
-            _dices[i].transform.DOLocalMove(Vector3.right * i, 0.2f);
+            _dices[i].ReturnStartPosition();
         }
 
         _dragging = true;
@@ -111,6 +111,7 @@ public class DiceHandler : MonoBehaviour, IInitializable
 
     private void DragDiceUp(MouseUpEvent3D data)
     {
+        if (!_dragging) return;
         _dragging = false;
 
         for (int i = 0; i < _dices.Count; i++)

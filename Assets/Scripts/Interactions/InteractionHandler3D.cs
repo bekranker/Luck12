@@ -48,9 +48,9 @@ public class InteractionHandler3D : MonoBehaviour, IInitializable
     void CheckMouseButtons()
     {
         // MouseDown için obje gerekli
-        if (_currentHoverObject != null && Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
-            EventManager.Raise(new MouseDownEvent3D(_currentHoverObject, _currentHoverObject.transform.position));
+            EventManager.Raise(new MouseDownEvent3D(_currentHoverObject, _currentHoverObject != null ? _currentHoverObject.transform.position : Vector3.zero));
         }
 
         // MouseUp her zaman gönderilir

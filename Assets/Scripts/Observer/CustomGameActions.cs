@@ -89,3 +89,13 @@ public struct MouseExitEvent2D
         Position = position;
     }
 }
+
+public struct DiceRolled
+{
+    public int DiceOne, DiceTwo;
+    public DiceRolled(int diceOne, int diceTwo)
+    {
+        this.DiceOne = diceOne;
+        this.DiceTwo = diceTwo;
+    }
+}
