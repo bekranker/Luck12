@@ -34,6 +34,7 @@ public class DiceHandler : MonoBehaviour
         }
         return true;
     }
-
     public List<int> GetResults() => _results;
+
+
 }
