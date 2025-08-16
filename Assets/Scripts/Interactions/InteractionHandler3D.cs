@@ -28,6 +28,7 @@ public class InteractionHandler3D : MonoBehaviour, IInitializable
                 if (_currentHoverObject != null)
                 {
                     EventManager.Raise(new MouseExitEvent3D(_currentHoverObject, hit.point));
+
                 }
 
                 _currentHoverObject = hitObject;
@@ -46,16 +47,22 @@ public class InteractionHandler3D : MonoBehaviour, IInitializable
 
     void CheckMouseButtons()
     {
-        if (_currentHoverObject == null) return;
-
-        if (Input.GetMouseButtonDown(0))
+        // MouseDown için obje gerekli
+        if (_currentHoverObject != null && Input.GetMouseButtonDown(0))
         {
             EventManager.Raise(new MouseDownEvent3D(_currentHoverObject, _currentHoverObject.transform.position));
         }
 
+        // MouseUp her zaman gönderilir
         if (Input.GetMouseButtonUp(0))
         {
-            EventManager.Raise(new MouseUpEvent3D(_currentHoverObject, _currentHoverObject.transform.position));
+            // Sadece null değilse transform pozisyonunu al
+            Vector3 pos = _currentHoverObject != null ? _currentHoverObject.transform.position : Vector3.zero;
+            EventManager.Raise(new MouseUpEvent3D(_currentHoverObject, pos));
+
+            // MouseUp sonrası hover sıfırlanır
+            _currentHoverObject = null;
         }
     }
+
 }

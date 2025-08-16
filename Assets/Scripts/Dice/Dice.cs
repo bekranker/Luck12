@@ -25,9 +25,14 @@ public class Dice : MonoBehaviour
             _showResult = false;
         }
     }
-    public bool IsMoving() => _rb.linearVelocity.magnitude > _threshold || _rb.angularVelocity.magnitude > _threshold;
+    public bool IsMoving() =>
+        _rb.angularVelocity.magnitude > _threshold ||
+        _rb.linearVelocity.magnitude > _threshold;
 
-
+    public void ForceMe()
+    {
+        _rb.AddForce(Vector3.one * Random.Range(-1, 1) * 10, ForceMode.Impulse);
+    }
     public int GetNumber()
     {
         if (IsMoving()) return 0;
@@ -48,4 +53,5 @@ public class Dice : MonoBehaviour
 
         return bestIndex + 1; // 1-6 arası sayı
     }
+
 }
