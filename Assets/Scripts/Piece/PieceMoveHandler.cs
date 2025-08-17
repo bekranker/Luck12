@@ -2,18 +2,28 @@ using UnityEngine;
 using DG.Tweening;
 using System.Collections.Generic;
 using System.Collections;
+using Zenject;
 
-public class PieceVisualizer : MonoBehaviour
+public class PieceMoveHandler : MonoBehaviour, IInitializable
 {
     [Header("----DoTween Props")]
     [SerializeField] private float _duration = 0.5f;
+    [SerializeField] private float _raiseDuration = 0.2f;
+    [SerializeField] private float _raiseAmount = 0.5f;
     [SerializeField] private float _spawnDuration;
     [SerializeField, Range(0, 10)] private float _distance = 1f; // Hücre aralığı
     [SerializeField] private Ease _ease = Ease.OutQuad;
+    [SerializeField] private Ease _easeToHand = Ease.OutQuad;
+    [SerializeField] private Ease _raiseUp = Ease.OutQuad;
     [SerializeField] private Vector2 _startPos = Vector2.zero; // Grid başlangıcı
     [SerializeField, Min(1)] private int _columns = 5; // Satır başına düşen sütun sayısı
     [SerializeField] private Transform _offset; // SAHNEDE SEÇİLEBİLİR OFFSET
 
+    /// <summary>
+    /// Re position all pieces
+    /// </summary>
+    /// <param name="pieces">piece list</param>
+    /// <returns>it is a Coroutine</returns>
     public IEnumerator RePosPiece(List<Piece> pieces)
     {
         if (pieces == null || pieces.Count == 0) yield break;
@@ -52,14 +62,49 @@ public class PieceVisualizer : MonoBehaviour
         int loopCount = Mathf.Min(pieces.Count, localPositions.Count);
         for (int i = 0; i < loopCount; i++)
         {
+            pieces[i].CanInteract = false;
             Vector3 worldTargetPos = (_offset != null)
                 ? _offset.position + (Vector3)(localPositions[i] - gridCenter)
                 : (Vector3)(localPositions[i] - gridCenter);
             pieces[i].transform
                             .DOMove(worldTargetPos, _duration)
                             .SetEase(_ease)
+                            .OnComplete(() => pieces[i].CanInteract = true)
                             .WaitForCompletion();
+            pieces[i].GridPosition = worldTargetPos;
             yield return new WaitForSeconds(_spawnDuration);
         }
+    }
+    /// <summary>
+    /// Moving piece to hand
+    /// </summary>
+    /// <param name="piece"></param>
+    /// <returns>the move Tween</returns>
+    public Tween ToHand(Piece piece)
+    {
+        piece.CanInteract = false;
+        DOTween.Kill(piece.transform);
+        return piece.transform.DOMove(transform.position, _duration).SetEase(_easeToHand).OnComplete(() => piece.CanInteract = true);
+    }
+    public Tween RaiseUp(Piece piece)
+    {
+        DOTween.Kill(piece.transform);
+        return piece.transform.DOMoveY(piece.GridPosition.y + _raiseAmount, _raiseDuration).SetEase(_raiseUp);
+    }
+    public Tween Drop(Piece piece)
+    {
+        DOTween.Kill(piece.transform);
+        return piece.transform.DOMoveY(piece.GridPosition.y, _raiseDuration).SetEase(_raiseUp);
+    }
+    public Tween Reject(Piece piece)
+    {
+        DOTween.Kill(piece.transform);
+        return piece.transform.DOShakePosition(.2f, .2f);
+    }
+
+    public void Initialize()
+    {
+        print("Piece Move Handler Initialized");
+
     }
 }

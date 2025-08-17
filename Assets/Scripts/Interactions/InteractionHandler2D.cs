@@ -8,7 +8,11 @@ public class InteractionHandler2D : MonoBehaviour, IInitializable
 
     private GameObject _currentHoverObject;
 
-    public void Initialize() { }
+    public void Initialize()
+    {
+        print("Interaction Handler 2D Initialized");
+
+    }
 
     void Update()
     {

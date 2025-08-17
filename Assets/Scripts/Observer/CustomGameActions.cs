@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public struct MouseDownEvent3D
@@ -92,10 +93,9 @@ public struct MouseExitEvent2D
 
 public struct DiceRolled
 {
-    public int DiceOne, DiceTwo;
-    public DiceRolled(int diceOne, int diceTwo)
+    public List<int> Numbers;
+    public DiceRolled(List<int> numbers)
     {
-        this.DiceOne = diceOne;
-        this.DiceTwo = diceTwo;
+        this.Numbers = numbers;
     }
 }

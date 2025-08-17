@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Zenject;
-using DG.Tweening;
 using System.Collections;
 
 public class DiceHandler : MonoBehaviour, IInitializable
@@ -26,6 +25,8 @@ public class DiceHandler : MonoBehaviour, IInitializable
 
     public void Initialize()
     {
+        print("Dice Handler Initialized");
+
         EventManager.Subscribe<MouseDownEvent3D>(DragDiceDown);
         EventManager.Subscribe<MouseUpEvent3D>(DragDiceUp);
     }
@@ -50,11 +51,14 @@ public class DiceHandler : MonoBehaviour, IInitializable
 
     private void UpdateDiceUI()
     {
+        List<int> results = new();
         for (int i = 0; i < _dices.Count; i++)
         {
-            _diceTexts[i].text = _dices[i].GetNumber().ToString();
+            int result = _dices[i].GetNumber();
+            _diceTexts[i].text = result.ToString();
+            results.Add(result);
         }
-        EventManager.Raise(new DiceRolled(_dices[0].GetNumber(), _dices[1].GetNumber()));
+        EventManager.Raise(new DiceRolled(results));
     }
 
     private bool AllDicesStopped()

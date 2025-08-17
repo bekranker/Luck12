@@ -5,15 +5,19 @@ public class ZenjectInstaller : MonoInstaller
 {
     [Header("---Components")]
     [SerializeField] private PieceHandler _pieceHandler;
-    [SerializeField] private PieceVisualizer _pieceVisulazier;
-    [SerializeField] private InteractionHandler2D _interactionHandler;
+    [SerializeField] private PieceMoveHandler _pieceMoveHandler;
+    [SerializeField] private PieceInteraction _pieceInteraction;
+    [SerializeField] private MatchHandler _matchHandler;
+    [SerializeField] private InteractionHandler2D _interactionHandler2D;
     [SerializeField] private DiceHandler _diceHandler;
 
     public override void InstallBindings()
     {
-        Container.BindInterfacesTo<PieceHandler>().FromInstance(_pieceHandler).AsCached();
-        Container.BindInterfacesTo<DiceHandler>().FromInstance(_diceHandler).AsCached();
-        Container.Bind<PieceVisualizer>().FromInstance(_pieceVisulazier).AsCached();
-        Container.BindInterfacesTo<InteractionHandler2D>().FromInstance(_interactionHandler).AsCached();
+        Container.BindInterfacesAndSelfTo<PieceHandler>().FromInstance(_pieceHandler).AsCached();
+        Container.BindInterfacesAndSelfTo<DiceHandler>().FromInstance(_diceHandler).AsCached();
+        Container.BindInterfacesAndSelfTo<InteractionHandler2D>().FromInstance(_interactionHandler2D).AsCached();
+        Container.BindInterfacesAndSelfTo<MatchHandler>().FromInstance(_matchHandler).AsCached();
+        Container.BindInterfacesAndSelfTo<PieceInteraction>().FromInstance(_pieceInteraction).AsCached();
+        Container.BindInterfacesAndSelfTo<PieceMoveHandler>().FromInstance(_pieceMoveHandler).AsCached();
     }
 }

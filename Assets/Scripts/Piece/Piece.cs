@@ -10,16 +10,17 @@ public class Piece : MonoBehaviour
     [SerializeField] private GameObject _backFace;
 
     private PieceData _data;
-    private PieceVisualizer _pieceVisualizer;
+    private PieceMoveHandler _PieceMoveHandler;
     private PieceHandler _pieceHandler;
-
-
+    public bool CanInteract;
+    public bool Selected;
+    public Vector2 GridPosition;
     public PieceData GetData() => _data;
-    public void InitPiece(PieceHandler pieceHandler, PieceData piece, PieceVisualizer pieceVisulazier)
+    public void InitPiece(PieceHandler pieceHandler, PieceData piece, PieceMoveHandler pieceVisulazier)
     {
         _data = piece;
         _pieceHandler = pieceHandler;
-        _pieceVisualizer = pieceVisulazier;
+        _PieceMoveHandler = pieceVisulazier;
         _name.text = _data.Number.ToString();
         _backFace.SetActive(false);
     }

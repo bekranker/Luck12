@@ -12,16 +12,13 @@ public class PieceHandler : MonoBehaviour, IInitializable
 
 
 
-    [Inject] private PieceVisualizer _pieceVisualizer;
-    private List<Piece> _createdPieces = new();
-
-
-
-    public List<Piece> GetPieces() => _createdPieces;
+    [Inject] private PieceMoveHandler _PieceMoveHandler;
+    public List<Piece> _createdPieces = new();
 
 
     public void Initialize()
     {
+        print("Piece Handler Initialized");
         Spawn();
     }
 
@@ -31,13 +28,23 @@ public class PieceHandler : MonoBehaviour, IInitializable
         for (int i = 0; i < _pieces.Count; i++)
         {
             var newPiece = Instantiate(_piecePrefab, transform.position, Quaternion.identity);
-            newPiece.InitPiece(this, _pieces[i], _pieceVisualizer);
+            newPiece.InitPiece(this, _pieces[i], _PieceMoveHandler);
             AddToSpawned(newPiece);
         }
-        StartCoroutine(_pieceVisualizer.RePosPiece(_createdPieces));
+        StartCoroutine(_PieceMoveHandler.RePosPiece(_createdPieces));
     }
     void AddToSpawned(Piece piece)
     {
         _createdPieces.Add(piece);
     }
+    public Piece SelectPiece(int number)
+    {
+        foreach (Piece piece in _createdPieces)
+        {
+            if (piece.GetData().Number == number)
+                return piece;
+        }
+        return null;
+    }
+
 }
