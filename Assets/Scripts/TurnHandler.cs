@@ -43,9 +43,11 @@ public class TurnHandler : MonoBehaviour, IInitializable
         foreach (Piece piece in pieces)
         {
             _pieceMoveHandler.ToHand(piece);
+            _pieceHandler.RemoveFromHand(piece);
             yield return new WaitForSeconds(.1f);
         }
         yield return new WaitForSeconds(1f);
+        _pieceInteraction.ClearSelectedHand();
         _pieceHandler.OpenAllInteractions();
     }
 }

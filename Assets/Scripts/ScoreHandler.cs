@@ -8,6 +8,7 @@ public class ScoreHandler : MonoBehaviour, IInitializable
     [Header("---Props")]
     [SerializeField] private float _duration;
     [SerializeField] private TMP_Text _scoreTMP;
+    [SerializeField] private TMP_Text _currentMultiplier;
     [SerializeField] private float _targetScore;
 
     private float _currentScore;
@@ -21,6 +22,7 @@ public class ScoreHandler : MonoBehaviour, IInitializable
     public void AddScore(float amount, int mult)
     {
         StartCoroutine(AddScoreIE(amount * mult));
+        _currentMultiplier.text = "x" + mult.ToString();
     }
     private IEnumerator AddScoreIE(float amount)
     {

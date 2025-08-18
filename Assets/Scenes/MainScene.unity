@@ -1771,6 +1771,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _duration: 0.01
   _scoreTMP: {fileID: 2122031483}
+  _currentMultiplier: {fileID: 1572645119}
   _targetScore: 10000
 --- !u!1 &1146452640
 GameObject:

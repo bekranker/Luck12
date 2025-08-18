@@ -43,4 +43,5 @@ public class PieceInteraction : MonoBehaviour, IInitializable
             }
         }
     }
+    public void ClearSelectedHand() => SelectedPieces?.Clear();
 }
