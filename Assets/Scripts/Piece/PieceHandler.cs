@@ -28,14 +28,18 @@ public class PieceHandler : MonoBehaviour, IInitializable
         for (int i = 0; i < _pieces.Count; i++)
         {
             var newPiece = Instantiate(_piecePrefab, transform.position, Quaternion.identity);
-            newPiece.InitPiece(this, _pieces[i], _PieceMoveHandler);
+            newPiece.InitPiece(_pieces[i]);
             AddToSpawned(newPiece);
         }
-        StartCoroutine(_PieceMoveHandler.RePosPiece(_createdPieces));
+        StartCoroutine(_PieceMoveHandler.RePosPieceCenter(_createdPieces));
     }
     void AddToSpawned(Piece piece)
     {
         _createdPieces.Add(piece);
+    }
+    public void RemoveFromHand(Piece piece)
+    {
+        _createdPieces.Remove(piece);
     }
     public Piece SelectPiece(int number)
     {
@@ -46,5 +50,18 @@ public class PieceHandler : MonoBehaviour, IInitializable
         }
         return null;
     }
-
+    public void BlockAllInteractions()
+    {
+        foreach (Piece piece in _createdPieces)
+        {
+            piece.CanInteract = false;
+        }
+    }
+    public void OpenAllInteractions()
+    {
+        foreach (Piece piece in _createdPieces)
+        {
+            piece.CanInteract = true;
+        }
+    }
 }

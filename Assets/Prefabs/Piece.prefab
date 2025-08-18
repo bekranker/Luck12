@@ -48,8 +48,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: {fileID: 40351807371889962}
+  _chipCount: {fileID: 7283850897833124985}
   _normalFace: {fileID: 7979633930351334878}
   _backFace: {fileID: 7044076519981661684}
+  CanInteract: 0
+  Selected: 0
+  GridPosition: {x: 0, y: 0}
+  ChipAmount: 0
 --- !u!58 &5830195879549616400
 CircleCollider2D:
   m_ObjectHideFlags: 0

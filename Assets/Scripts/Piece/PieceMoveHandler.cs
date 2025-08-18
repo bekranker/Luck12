@@ -6,6 +6,8 @@ using Zenject;
 
 public class PieceMoveHandler : MonoBehaviour, IInitializable
 {
+    [Header("----Components")]
+    [SerializeField] private Transform _selectedOffset;
     [Header("----DoTween Props")]
     [SerializeField] private float _duration = 0.5f;
     [SerializeField] private float _raiseDuration = 0.2f;
@@ -19,12 +21,24 @@ public class PieceMoveHandler : MonoBehaviour, IInitializable
     [SerializeField, Min(1)] private int _columns = 5; // Satır başına düşen sütun sayısı
     [SerializeField] private Transform _offset; // SAHNEDE SEÇİLEBİLİR OFFSET
 
+    [Header("----SELECTED DoTween Props")]
+    [SerializeField] private float _scaleAmount;
+    [SerializeField] private float _scaleDuration;
+
+    public IEnumerator RePosPieceCenter(List<Piece> pieces)
+    {
+        yield return StartCoroutine(RePosPieceIE(pieces, _offset));
+    }
+    public IEnumerator RePosPieceSelected(List<Piece> pieces)
+    {
+        yield return StartCoroutine(RePosPieceIE(pieces, _selectedOffset));
+    }
     /// <summary>
     /// Re position all pieces
     /// </summary>
     /// <param name="pieces">piece list</param>
     /// <returns>it is a Coroutine</returns>
-    public IEnumerator RePosPiece(List<Piece> pieces)
+    public IEnumerator RePosPieceIE(List<Piece> pieces, Transform offset)
     {
         if (pieces == null || pieces.Count == 0) yield break;
 
@@ -63,8 +77,8 @@ public class PieceMoveHandler : MonoBehaviour, IInitializable
         for (int i = 0; i < loopCount; i++)
         {
             pieces[i].CanInteract = false;
-            Vector3 worldTargetPos = (_offset != null)
-                ? _offset.position + (Vector3)(localPositions[i] - gridCenter)
+            Vector3 worldTargetPos = (offset != null)
+                ? offset.position + (Vector3)(localPositions[i] - gridCenter)
                 : (Vector3)(localPositions[i] - gridCenter);
             pieces[i].transform
                             .DOMove(worldTargetPos, _duration)
@@ -89,19 +103,30 @@ public class PieceMoveHandler : MonoBehaviour, IInitializable
     public Tween RaiseUp(Piece piece)
     {
         DOTween.Kill(piece.transform);
+        piece.transform.position = piece.GridPosition;
         return piece.transform.DOMoveY(piece.GridPosition.y + _raiseAmount, _raiseDuration).SetEase(_raiseUp);
     }
     public Tween Drop(Piece piece)
     {
         DOTween.Kill(piece.transform);
+        piece.transform.position = piece.GridPosition;
         return piece.transform.DOMoveY(piece.GridPosition.y, _raiseDuration).SetEase(_raiseUp);
+    }
+    public Tween Drop(Piece piece, float amount)
+    {
+        DOTween.Kill(piece.transform);
+        return piece.transform.DOMoveY(piece.transform.position.y - amount, _raiseDuration).SetEase(_raiseUp);
     }
     public Tween Reject(Piece piece)
     {
         DOTween.Kill(piece.transform);
         return piece.transform.DOShakePosition(.2f, .2f);
     }
-
+    public Tween Punch(Piece piece)
+    {
+        DOTween.Kill(piece.transform);
+        return piece.transform.DOPunchScale(Vector2.one * _scaleAmount, _scaleDuration);
+    }
     public void Initialize()
     {
         print("Piece Move Handler Initialized");

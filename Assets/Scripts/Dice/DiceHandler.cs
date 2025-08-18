@@ -65,7 +65,10 @@ public class DiceHandler : MonoBehaviour, IInitializable
     {
         foreach (Dice dice in _dices)
         {
-            if (dice.IsMoving()) return false;
+            if (dice.IsMoving())
+            {
+                return false;
+            }
         }
         return true;
     }
@@ -110,7 +113,7 @@ public class DiceHandler : MonoBehaviour, IInitializable
         }
 
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(new Vector3(currentScreenPos.x, currentScreenPos.y, 4f));
-        _diceParent.position = Vector3.SmoothDamp(_diceParent.position, mouseWorld, ref _velocity, 0.2f);
+        _diceParent.position = Vector3.SmoothDamp(_diceParent.position, mouseWorld, ref _velocity, 0.1f);
     }
 
     private void DragDiceUp(MouseUpEvent3D data)
