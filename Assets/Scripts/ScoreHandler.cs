@@ -21,19 +21,11 @@ public class ScoreHandler : MonoBehaviour, IInitializable
 
     public void AddScore(float amount, int mult)
     {
-        StartCoroutine(AddScoreIE(amount * mult));
+        _currentScore += amount * _currentMultipilier;
+        SetTMP(_currentScore);
         _currentMultiplier.text = "x" + mult.ToString();
     }
-    private IEnumerator AddScoreIE(float amount)
-    {
-        float targetScore = _currentScore + amount * _currentMultipilier;
-        while (_currentScore <= targetScore)
-        {
-            _currentScore++;
-            SetTMP(_currentScore);
-            yield return new WaitForSeconds(_duration);
-        }
-    }
+
     private void SetTMP(float score)
     {
         _scoreTMP.text = score.ToString();

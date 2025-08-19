@@ -5,7 +5,6 @@ using Zenject;
 public class PieceInteraction : MonoBehaviour, IInitializable
 {
     [Inject] private PieceMoveHandler _pieceMoveHandler;
-    [Inject] private MatchHandler _matchHandler;
 
     public List<Piece> SelectedPieces = new();
     public void Initialize()
@@ -24,11 +23,6 @@ public class PieceInteraction : MonoBehaviour, IInitializable
         {
             if (!piece.Selected)
             {
-                if (!_matchHandler.GetMatches().Contains(piece))
-                {
-                    _pieceMoveHandler.Reject(piece);
-                    return;
-                }
                 if (!SelectedPieces.Contains(piece))
                     SelectedPieces.Add(piece);
                 _pieceMoveHandler.RaiseUp(piece);

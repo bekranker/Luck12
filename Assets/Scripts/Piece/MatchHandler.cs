@@ -1,11 +1,13 @@
+using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using Zenject;
-
 public class MatchHandler : MonoBehaviour, IInitializable
 {
     [Inject] private PieceHandler _pieceHandler;
-    private List<Piece> _matches = new();
+    private List<RolledDiceData> _matches = new();
+
     public void Initialize()
     {
         print("Match Handler Initialized");
@@ -31,46 +33,88 @@ public class MatchHandler : MonoBehaviour, IInitializable
                 // bölme (her iki yönde de bakabilirsin)
                 if (index % otherIndex == 0)
                 {
-                    var piece = _pieceHandler.SelectPiece(index / otherIndex);
-                    if (piece != null && !_matches.Contains(piece))
-                        _matches.Add(piece);
+                    Piece piece = _pieceHandler.SelectPiece(index / otherIndex);
+                    RolledDiceData dataDivide = new RolledDiceData(piece, CalculationType.Divide);
+                    if (piece != null && !_matches.Contains(dataDivide))
+                        _matches.Add(dataDivide);
                 }
-                if (otherIndex % index == 0)
+                else if (otherIndex % index == 0)
                 {
-                    var piece = _pieceHandler.SelectPiece(otherIndex / index);
-                    if (piece != null && !_matches.Contains(piece))
-                        _matches.Add(piece);
+
+                    Piece piece = _pieceHandler.SelectPiece(otherIndex / index);
+                    RolledDiceData dataDivide2 = new RolledDiceData(piece, CalculationType.Divide);
+                    if (piece != null && !_matches.Contains(dataDivide2))
+                        _matches.Add(dataDivide2);
                 }
 
                 // toplama
-                var pieceSum = _pieceHandler.SelectPiece(index + otherIndex);
-                if (pieceSum != null && !_matches.Contains(pieceSum))
-                    _matches.Add(pieceSum);
+                Piece pieceSum = _pieceHandler.SelectPiece(index + otherIndex);
+                RolledDiceData dataSum = new RolledDiceData(pieceSum, CalculationType.Sum);
+
+                if (pieceSum != null && !_matches.Contains(dataSum))
+                    _matches.Add(dataSum);
 
                 // çıkarma (iki yönde)
-                var pieceDiff1 = _pieceHandler.SelectPiece(index - otherIndex);
-                var pieceDiff2 = _pieceHandler.SelectPiece(otherIndex - index);
-                if (pieceDiff1 != null && !_matches.Contains(pieceDiff1))
-                    _matches.Add(pieceDiff1);
-                if (pieceDiff2 != null && !_matches.Contains(pieceDiff2))
-                    _matches.Add(pieceDiff2);
+
+                Piece pieceDiff1 = _pieceHandler.SelectPiece(index - otherIndex);
+                Piece pieceDiff2 = _pieceHandler.SelectPiece(otherIndex - index);
+                RolledDiceData dataMighness = new RolledDiceData(pieceDiff1, CalculationType.Mighness);
+                RolledDiceData dataMighness2 = new RolledDiceData(pieceDiff2, CalculationType.Mighness);
+                if (pieceDiff1 != null && !_matches.Contains(dataMighness))
+                    _matches.Add(dataMighness);
+                if (pieceDiff2 != null && !_matches.Contains(dataMighness2))
+                    _matches.Add(dataMighness2);
 
                 // çarpma
-                var pieceMult = _pieceHandler.SelectPiece(index * otherIndex);
-                if (pieceMult != null && !_matches.Contains(pieceMult))
-                    _matches.Add(pieceMult);
+                Piece pieceMult = _pieceHandler.SelectPiece(index * otherIndex);
+                RolledDiceData dataMult = new RolledDiceData(pieceMult, CalculationType.Multipily);
+                print(pieceMult + " ");
+                // if (pieceMult != null && !_matches.Contains(dataMult))
+                _matches.Add(dataMult);
             }
         }
-
     }
 
-    public List<Piece> GetMatches() => _matches;
+    public List<RolledDiceData> GetMatches() => _matches;
     private void PrintResult()
     {
-        foreach (Piece piece in _matches)
+        foreach (RolledDiceData data in _matches)
         {
-            if (piece != null)
-                Debug.Log($"{piece.GetData().Number}");
+            if (data != null && data.MyPiece)
+                Debug.Log($"{data.MyPiece.GetData().Number}");
         }
+    }
+    public bool IsMyPiece(Piece piece)
+    {
+        foreach (RolledDiceData data in GetMatches())
+        {
+            if (data.MyPiece == piece) return true;
+        }
+        return false;
+    }
+    public int CalcCount(ref int counter)
+    {
+        foreach (RolledDiceData data in GetMatches())
+        {
+            if (data.Calc == CalculationType.Sum)
+            {
+                //Invoke Sum Events
+            }
+            else if (data.Calc == CalculationType.Mighness)
+            {
+                //Invoke Mighness Events
+            }
+            else if (data.Calc == CalculationType.Multipily)
+            {
+                //Invoke Mult Events
+            }
+            else if (data.Calc == CalculationType.Divide)
+            {
+                //Invoke Divide Events
+            }
+            counter++;
+        }
+
+        return counter;
     }
 }
