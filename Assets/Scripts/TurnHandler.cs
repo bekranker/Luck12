@@ -48,10 +48,14 @@ public class TurnHandler : MonoBehaviour, IInitializable
         List<RolledDiceData> rolledDiceData = _matchHandler.GetMatches();
         for (int i = 0; i < rolledDiceData.Count; i++)
         {
-            print(rolledDiceData[i].MyPiece);
-            print(rolledDiceData[i].Calc);
-            _scoreHandler.AddScore(rolledDiceData[i].MyPiece.ChipAmount, _matchHandler.CalcCount(ref counter));
-            yield return _pieceMoveHandler.Punch(rolledDiceData[i].MyPiece).WaitForCompletion();
+            if (selectedPieces.Contains(rolledDiceData[i].MyPiece))
+            {
+                print(rolledDiceData[i].MyPiece);
+                print(rolledDiceData[i].Calc);
+                _scoreHandler.AddScore(rolledDiceData[i].MyPiece.ChipAmount, _matchHandler.CalcCount(ref counter));
+                yield return _pieceMoveHandler.Punch(rolledDiceData[i].MyPiece).WaitForCompletion();
+            }
+
         }
         yield return new WaitForSeconds(.5f);
         foreach (Piece piece in selectedPieces)
