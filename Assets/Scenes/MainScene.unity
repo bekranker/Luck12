@@ -3965,7 +3965,7 @@ MonoBehaviour:
   screenBounds: {x: 8, y: 4}
   spinDuration: 1.5
   spinSpeed: 960
-  settleDuration: 1
+  settleDuration: 0.7
   _targetResults: 0100000002000000
 --- !u!1 &2086426383
 GameObject:

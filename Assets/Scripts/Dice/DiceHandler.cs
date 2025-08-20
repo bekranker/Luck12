@@ -79,7 +79,7 @@ public class DiceHandler : MonoBehaviour, IInitializable
             dice.transform.position = pos;
 
             // 💡 Velocity’yi yavaşlat (damping)
-            float damping = 0.994f; // 1’e yakınsa yavaş yavaş durur, 0.9 hızlı durur
+            float damping = 0.992f; // 1’e yakınsa yavaş yavaş durur, 0.9 hızlı durur
             vel *= damping;
 
             // Çok küçükse sıfırla
@@ -163,7 +163,7 @@ public class DiceHandler : MonoBehaviour, IInitializable
         DOTween.Kill(dice); // Spin’i durdur
 
         // DoTween ile doğru yüzeye kaydır
-        dice.ShowResult(result);
+        dice.ShowResult(result, settleDuration);
     }
 
 

@@ -22,14 +22,14 @@ public class Dice : MonoBehaviour
     /// <summary>
     /// Zarın yüzünü belirli sayıya döndür
     /// </summary>
-    public void ShowResult(int number)
+    public void ShowResult(int number, float duration)
     {
         if (number < 1 || number > 6) return;
         // Inspector’da tanımlanan yüzün local rotation’ını alıyoruz
         Quaternion targetLocalRot = faceRotations[number - 1].localRotation;
 
         // DOTween ile local rotation'a dön
-        transform.DOLocalRotateQuaternion(targetLocalRot, 2f)
+        transform.DOLocalRotateQuaternion(targetLocalRot, duration)
             .SetEase(Ease.OutSine);
     }
 
