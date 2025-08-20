@@ -5,60 +5,56 @@ public class Dice : MonoBehaviour
 {
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private float _threshold = 0.05f;
+    [Header("Dice Faces (index = number-1)")]
+    [SerializeField] private Transform[] faceRotations;
+    // Inspector’a 6 empty transform koy. 
+    // Örn: faceRotations[0] => "1 yüzü yukarı bakacak rotation"
+    // Bu transformların sadece rotation kısmı kullanılacak.
 
-    // Yönleri ve numaraları tanımla (örnek: 6 yüz)
-    [SerializeField] private Transform _side1;
-    [SerializeField] private Transform _side2;
-    [SerializeField] private Transform _side3;
-    [SerializeField] private Transform _side4;
-    [SerializeField] private Transform _side5;
-    [SerializeField] private Transform _side6;
     public bool _showResult;
-    private Vector3 _localStartPos;
+    public Vector3 LocalStartPos;
 
     void Start()
     {
-        _rb.rotation = Random.rotation;
-        _localStartPos = transform.localPosition;
+        LocalStartPos = transform.localPosition;
     }
-    void Update()
+
+    /// <summary>
+    /// Zarın yüzünü belirli sayıya döndür
+    /// </summary>
+    public void ShowResult(int number)
     {
-        if (_rb.linearDamping >= .2f)
-        {
-            _showResult = false;
-        }
+        if (number < 1 || number > 6) return;
+        // Inspector’da tanımlanan yüzün local rotation’ını alıyoruz
+        Quaternion targetLocalRot = faceRotations[number - 1].localRotation;
+
+        // DOTween ile local rotation'a dön
+        transform.DOLocalRotateQuaternion(targetLocalRot, 2f)
+            .SetEase(Ease.OutSine);
     }
-    public bool IsMoving() =>
-        _rb.angularVelocity.magnitude > _threshold ||
-        _rb.linearVelocity.magnitude > _threshold;
 
-    public void ForceMe()
+    public void KillTween()
     {
-        _rb.AddForce(Vector3.one * Random.Range(-1, 1) * 10, ForceMode.Impulse);
-    }
-    public int GetNumber()
-    {
-        if (IsMoving()) return 0;
-        Transform[] sides = new Transform[] { _side1, _side2, _side3, _side4, _side5, _side6 };
-        int bestIndex = 0;
-        float maxDot = -1f;
-
-        for (int i = 0; i < sides.Length; i++)
-        {
-            // Zarın yukarı yönü ile yüz yönünü karşılaştır
-            float dot = Vector3.Dot(Vector3.back, sides[i].forward);
-            if (dot > maxDot)
-            {
-                maxDot = dot;
-                bestIndex = i;
-            }
-        }
-
-        return bestIndex + 1; // 1-6 arası sayı
+        DOTween.Kill(transform);
     }
     public void ReturnStartPosition()
     {
         DOTween.Kill(transform);
-        transform.DOLocalMove(_localStartPos, .2f).SetEase(Ease.OutSine);
+        transform.DOLocalMove(LocalStartPos, .2f).SetEase(Ease.OutSine);
+    }
+    public void StartSpin(Vector3 axis, float initialSpeed, float duration)
+    {
+        // Tween kullanarak speed’i zamanla sıfıra indiriyoruz
+        float speed = initialSpeed;
+
+        DOTween.Kill(this); // varsa önceki spin’i durdur
+
+        DOTween.To(() => speed, x => speed = x, 0f, duration)
+            .SetEase(Ease.OutCubic)
+            .OnUpdate(() =>
+            {
+                transform.Rotate(axis * speed * Time.deltaTime, Space.Self);
+            })
+            .SetId(this);
     }
 }
