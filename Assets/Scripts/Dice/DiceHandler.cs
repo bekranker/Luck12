@@ -79,7 +79,7 @@ public class DiceHandler : MonoBehaviour, IInitializable
             dice.transform.position = pos;
 
             // 💡 Velocity’yi yavaşlat (damping)
-            float damping = 0.992f; // 1’e yakınsa yavaş yavaş durur, 0.9 hızlı durur
+            float damping = 0.994f; // 1’e yakınsa yavaş yavaş durur, 0.9 hızlı durur
             vel *= damping;
 
             // Çok küçükse sıfırla
