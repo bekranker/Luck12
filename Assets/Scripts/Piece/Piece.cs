@@ -6,6 +6,7 @@ public class Piece : MonoBehaviour
 
     [Header("---UI Props")]
     [SerializeField] private TMP_Text _name;
+    [SerializeField] private TMP_Text _name2;
     [SerializeField] private TMP_Text _chipCount;
     [SerializeField] private GameObject _normalFace;
     [SerializeField] private GameObject _backFace;
@@ -25,6 +26,7 @@ public class Piece : MonoBehaviour
     {
         _data = piece;
         _name.text = _data.Number.ToString();
+        _name2.text = _data.Number.ToString();
 
         ChipAmount = Random.Range(10, 100);
         _chipCount.text = ChipAmount.ToString();
