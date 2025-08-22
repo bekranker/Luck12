@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class Dice : MonoBehaviour
 {
-    [SerializeField] private Rigidbody _rb;
-    [SerializeField] private float _threshold = 0.05f;
     [Header("Dice Faces (index = number-1)")]
     [SerializeField] private Transform[] faceRotations;
     // Inspector’a 6 empty transform koy. 

@@ -58,6 +58,8 @@ public class TurnHandler : MonoBehaviour, IInitializable
 
         }
         yield return new WaitForSeconds(.5f);
+        _scoreHandler.SetScore();
+        yield return new WaitForSeconds(.5f);
         foreach (Piece piece in selectedPieces)
         {
             _pieceMoveHandler.ToHand(piece);

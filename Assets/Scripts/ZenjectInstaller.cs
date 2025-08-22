@@ -13,6 +13,8 @@ public class ZenjectInstaller : MonoInstaller
     [SerializeField] private DiceHandler _diceHandler;
     [SerializeField] private TurnHandler _turnHandler;
     [SerializeField] private ScoreHandler _scoreHandler;
+    [SerializeField] private RuneHandler _runeHandler;
+    [SerializeField] private RuneVisualizer _runeVisualizer;
 
     public override void InstallBindings()
     {
@@ -25,5 +27,7 @@ public class ZenjectInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<PieceMoveHandler>().FromInstance(_pieceMoveHandler).AsCached();
         Container.BindInterfacesAndSelfTo<TurnHandler>().FromInstance(_turnHandler).AsCached();
         Container.BindInterfacesAndSelfTo<ScoreHandler>().FromInstance(_scoreHandler).AsCached();
+        Container.BindInterfacesAndSelfTo<RuneHandler>().FromInstance(_runeHandler).AsCached();
+        Container.BindInterfacesAndSelfTo<RuneVisualizer>().FromInstance(_runeVisualizer).AsCached();
     }
 }

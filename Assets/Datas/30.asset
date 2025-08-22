@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: 30
   m_EditorClassIdentifier: 
   Number: 30
+  ChipCount: 100

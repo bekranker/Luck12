@@ -10,7 +10,7 @@ public class Piece : MonoBehaviour
     [SerializeField] private TMP_Text _chipCount;
     [SerializeField] private GameObject _normalFace;
     [SerializeField] private GameObject _backFace;
-
+    [SerializeField] private SpriteRenderer _spriteRenderer;
     private PieceData _data;
     public bool CanInteract;
     public bool Selected;
@@ -18,9 +18,10 @@ public class Piece : MonoBehaviour
 
 
     public PieceData GetData() => _data;
+    public SpriteRenderer GetSP() => _spriteRenderer;
     public int ChipAmount;
-    public GameObject BackFace => _backFace;
-    public GameObject FrontFace => _normalFace;
+    public GameObject GetBackFace() => _backFace;
+    public GameObject GetFrontFace() => _normalFace;
 
     public void InitPiece(PieceData piece)
     {
@@ -28,8 +29,8 @@ public class Piece : MonoBehaviour
         _name.text = _data.Number.ToString();
         _name2.text = _data.Number.ToString();
 
-        ChipAmount = Random.Range(10, 100);
-        _chipCount.text = ChipAmount.ToString();
+        ChipAmount = _data.ChipCount;
+        _chipCount.text = ChipAmount.ToString() + " Chip";
 
         _backFace.SetActive(false);
     }

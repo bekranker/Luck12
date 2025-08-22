@@ -5,12 +5,11 @@ using Zenject;
 public class PieceInteraction : MonoBehaviour, IInitializable
 {
     [Inject] private PieceMoveHandler _pieceMoveHandler;
+    [Inject] private PieceVisualizer _pieceVisualizer;
 
     public List<Piece> SelectedPieces = new();
     public void Initialize()
     {
-        print("Piece Interaction Initialized");
-
         EventManager.Subscribe<MouseDownEvent2D>(GetPieceDown);
     }
     void OnDestroy()
@@ -25,14 +24,14 @@ public class PieceInteraction : MonoBehaviour, IInitializable
             {
                 if (!SelectedPieces.Contains(piece))
                     SelectedPieces.Add(piece);
-                _pieceMoveHandler.RaiseUp(piece);
+                _pieceVisualizer.PressSprite(piece);
                 piece.Selected = true;
             }
             else
             {
                 if (SelectedPieces.Contains(piece))
                     SelectedPieces.Remove(piece);
-                _pieceMoveHandler.Drop(piece);
+                _pieceVisualizer.UnPressSprite(piece);
                 piece.Selected = false;
             }
         }

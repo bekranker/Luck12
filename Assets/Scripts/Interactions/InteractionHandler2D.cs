@@ -10,8 +10,6 @@ public class InteractionHandler2D : MonoBehaviour, IInitializable
 
     public void Initialize()
     {
-        print("Interaction Handler 2D Initialized");
-
     }
 
     void Update()

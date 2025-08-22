@@ -32,7 +32,6 @@ public class DiceHandler : MonoBehaviour, IInitializable
 
     public void Initialize()
     {
-        Debug.Log("Dice Handler Initialized");
         EventManager.Subscribe<MouseDownEvent3D>(DragDiceDown);
         EventManager.Subscribe<MouseUpEvent3D>(DragDiceUp);
 

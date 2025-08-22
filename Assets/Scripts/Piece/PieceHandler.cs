@@ -18,7 +18,6 @@ public class PieceHandler : MonoBehaviour, IInitializable
 
     public void Initialize()
     {
-        print("Piece Handler Initialized");
         Spawn();
     }
 

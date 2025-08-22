@@ -109,7 +109,6 @@ public class PieceMoveHandler : MonoBehaviour, IInitializable
     public Tween Drop(Piece piece)
     {
         DOTween.Kill(piece.transform);
-        piece.transform.position = piece.GridPosition;
         return piece.transform.DOMoveY(piece.GridPosition.y, _raiseDuration).SetEase(_raiseUp);
     }
     public Tween Drop(Piece piece, float amount)
@@ -129,7 +128,5 @@ public class PieceMoveHandler : MonoBehaviour, IInitializable
     }
     public void Initialize()
     {
-        print("Piece Move Handler Initialized");
-
     }
 }

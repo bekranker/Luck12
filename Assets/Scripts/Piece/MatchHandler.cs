@@ -10,7 +10,6 @@ public class MatchHandler : MonoBehaviour, IInitializable
 
     public void Initialize()
     {
-        print("Match Handler Initialized");
         EventManager.Subscribe<DiceRolled>(TakeRollIndexes);
     }
     void OnDestroy()
