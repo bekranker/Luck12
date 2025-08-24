@@ -91,7 +91,15 @@ public class MatchHandler : MonoBehaviour, IInitializable
         }
         return false;
     }
-    public int CalcCount(ref int counter)
+    public RolledDiceData GetResult(CalculationType resultType)
+    {
+        foreach (RolledDiceData data in _matches)
+        {
+            if (data.Calc == resultType) return data;
+        }
+        return null;
+    }
+    public IEnumerator CalcCount(int counter)
     {
         foreach (RolledDiceData data in GetMatches())
         {
@@ -110,10 +118,12 @@ public class MatchHandler : MonoBehaviour, IInitializable
             else if (data.Calc == CalculationType.Divide)
             {
                 //Invoke Divide Events
+                SequentialEventManager.Raise(new DivideEffect(GetResult(CalculationType.Divide).MyPiece.GetData().Number));
+
             }
             counter++;
         }
 
-        return counter;
+        yield return counter;
     }
 }

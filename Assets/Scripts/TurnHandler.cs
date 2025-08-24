@@ -52,7 +52,9 @@ public class TurnHandler : MonoBehaviour, IInitializable
             {
                 print(rolledDiceData[i].MyPiece);
                 print(rolledDiceData[i].Calc);
-                _scoreHandler.AddScore(rolledDiceData[i].MyPiece.ChipAmount, _matchHandler.CalcCount(ref counter));
+                StartCoroutine(_matchHandler.CalcCount(counter));
+                counter++;
+                _scoreHandler.AddScore(rolledDiceData[i].MyPiece.ChipAmount, counter);
                 yield return _pieceMoveHandler.Punch(rolledDiceData[i].MyPiece).WaitForCompletion();
             }
 

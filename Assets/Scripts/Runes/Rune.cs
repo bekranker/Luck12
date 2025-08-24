@@ -1,4 +1,5 @@
 using DG.Tweening;
+using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
 
@@ -7,35 +8,17 @@ public class Rune : MonoBehaviour
     [Header("----UI Props")]
     [SerializeField] private TMP_Text _description;
     [SerializeField] private TMP_Text _name;
-    [SerializeField] private GameObject _rune;
-
-
-
-    public void Initialize()
+    [SerializeField] private GameObject _runeUI;
+    [SerializeField] private Image _sprite;
+    private RuneData _data;
+    public RuneData GetData() => _data;
+    public void Initialize(RuneData data)
     {
-
+        _sprite.sprite = data.SpriteValue;
+        _name.text = data.Name;
+        _description.text = data.Description;
+        _runeUI.SetActive(false);
     }
 
-    void OnEnable()
-    {
-        EventManager.Subscribe<MouseEnterEvent2D>(ShowDescUI);
-        EventManager.Subscribe<MouseExitEvent2D>(HideDescUI);
-    }
-    void OnDestroy()
-    {
-        EventManager.UnSubscribe<MouseEnterEvent2D>(ShowDescUI);
-        EventManager.UnSubscribe<MouseExitEvent2D>(HideDescUI);
-    }
-
-    public void ShowDescUI(MouseEnterEvent2D data)
-    {
-        _rune.SetActive(true);
-        DOTween.Kill(_rune.transform);
-        _rune.transform.localScale = Vector2.one;
-        _rune.transform.DOPunchScale(Vector2.one * .2f, .2f);
-    }
-    public void HideDescUI(MouseExitEvent2D data)
-    {
-        _rune.SetActive(false);
-    }
+    public GameObject GetRuneUI() => _runeUI;
 }

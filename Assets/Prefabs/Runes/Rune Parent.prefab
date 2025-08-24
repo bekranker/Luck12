@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 6391099404415306395}
   - component: {fileID: 713466238754570958}
   m_Layer: 5
-  m_Name: Joker
+  m_Name: Rune Sprite
   m_TagString: Joker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -358,8 +358,9 @@ GameObject:
   - component: {fileID: 4094542133762946749}
   - component: {fileID: 3213160329849953537}
   - component: {fileID: 7965118140490195277}
-  m_Layer: 5
-  m_Name: Joker Parent
+  - component: {fileID: 5552738654527945540}
+  m_Layer: 8
+  m_Name: Rune Parent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -401,7 +402,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tiltAmount: 45
   _smoothSpeed: 5
-  _hoverDistance: 1.1
+  _hoverDistance: 0.7
   _originalRotation: {x: 0, y: 0, z: 0, w: 0}
   _mainCamera: {fileID: 0}
 --- !u!114 &7965118140490195277
@@ -416,8 +417,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 173322dda40d34de1b16120f92827879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _description: {fileID: 6470441235816597150}
-  _descObject: {fileID: 6122805377412418785}
+  _description: {fileID: 5190695800017551290}
+  _name: {fileID: 8267555024685385518}
+  _runeUI: {fileID: 6122805377412418785}
+  _sprite: {fileID: 713466238754570958}
+--- !u!58 &5552738654527945540
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5666467223464684957}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 80
 --- !u!1 &6122805377412418785
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,7 +547,7 @@ GameObject:
   - component: {fileID: 1173533088104553204}
   - component: {fileID: 6470441235816597150}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Rarety
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -644,7 +683,7 @@ GameObject:
   - component: {fileID: 3857484807340337971}
   - component: {fileID: 8238333544457832430}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

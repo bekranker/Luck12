@@ -885,6 +885,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tiltAmount: 50
   _smoothSpeed: 8
-  _hoverDistance: 1
+  _hoverDistance: 0.6
   _originalRotation: {x: 0, y: 0, z: 0, w: 0}
   _mainCamera: {fileID: 0}

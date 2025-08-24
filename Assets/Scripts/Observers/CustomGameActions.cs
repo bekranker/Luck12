@@ -99,3 +99,11 @@ public struct DiceRolled
         this.Numbers = numbers;
     }
 }
+public struct DivideEffect
+{
+    public int Number;
+    public DivideEffect(int number)
+    {
+        this.Number = number;
+    }
+}

@@ -4,8 +4,3 @@ using UnityEngine;
 public class BasicPieceData : PieceData
 {
 }
-
-[CreateAssetMenu(fileName = "EffectedPieceData", menuName = "Create Effected Piece", order = 2)]
-public class EffectedPieceData : PieceData
-{
-}

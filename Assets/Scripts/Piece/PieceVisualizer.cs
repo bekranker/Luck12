@@ -7,6 +7,7 @@ public class PieceVisualizer : MonoBehaviour, IInitializable
     [Header("---Piece Props")]
     [SerializeField] private Sprite _selected;
     [SerializeField] private Sprite _unSelected;
+    [SerializeField] private Color _selectedColor;
     [Header("---DoTween Props")]
     [SerializeField] private float _flipDuration;
     public Tween Flip(Piece piece)
@@ -41,6 +42,11 @@ public class PieceVisualizer : MonoBehaviour, IInitializable
         if (data.MouseObject.TryGetComponent<Piece>(out Piece piece))
         {
             piece.GetBackFace().SetActive(true);
+            DOTween.Kill(piece.GetBackFace().transform);
+            piece.GetBackFace().transform.localScale = Vector3.one;
+            piece.GetBackFace().transform.DOPunchScale(Vector3.one * .2f, .2f);
+            piece.GetSP().color = _selectedColor;
+
         }
     }
     public void DisablePieceDataUI(MouseExitEvent2D data)
@@ -48,6 +54,8 @@ public class PieceVisualizer : MonoBehaviour, IInitializable
         if (data.MouseObject.TryGetComponent<Piece>(out Piece piece))
         {
             piece.GetBackFace().SetActive(false);
+            piece.GetSP().color = Color.white;
+
         }
     }
 }
