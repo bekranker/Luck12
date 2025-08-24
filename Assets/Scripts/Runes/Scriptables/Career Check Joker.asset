@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9435cbc70d01d4605a446f76699c16c3, type: 3}
   m_Name: Career Check Joker
   m_EditorClassIdentifier: 
-  Name: Forget Late Joker
+  Name: Career Check Joker
   Description: Earnings at the end of the round are increased by +10%
   SpriteValue: {fileID: 21300000, guid: f746931a023b049918efb6937c23d572, type: 3}

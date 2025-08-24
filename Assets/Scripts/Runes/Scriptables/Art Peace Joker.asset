@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9435cbc70d01d4605a446f76699c16c3, type: 3}
   m_Name: Art Peace Joker
   m_EditorClassIdentifier: 
-  Name: Forget Late Joker
+  Name: Art Peace Joker
   Description: "+15 chip bonus if different dice values \u200B\u200Bare used"
   SpriteValue: {fileID: 21300000, guid: f746931a023b049918efb6937c23d572, type: 3}

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9435cbc70d01d4605a446f76699c16c3, type: 3}
   m_Name: Possible Six Joker
   m_EditorClassIdentifier: 
-  Name: Forget Late Joker
+  Name: Possible Six Joker
   Description: 25% chance of 50 chip bonus each round
   SpriteValue: {fileID: 21300000, guid: e6e588b321c924d19a04f4f3e1b5286d, type: 3}

@@ -14,6 +14,8 @@ public class RuneHandler : MonoBehaviour, IInitializable
     [Inject] private RuneMoveHandler _runeMove;
     private List<Rune> _createdRunes = new();
 
+
+
     public void Initialize()
     {
         StartCoroutine(spawnRunes());
@@ -28,7 +30,9 @@ public class RuneHandler : MonoBehaviour, IInitializable
             AddToCreated(createdRune);
             yield return new WaitForSeconds(.1f);
         }
+        EventManager.Raise(new RunesInitialized(_createdRunes));
     }
+
     void OnDestroy()
     {
 

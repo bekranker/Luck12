@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9435cbc70d01d4605a446f76699c16c3, type: 3}
   m_Name: Gas This Joker
   m_EditorClassIdentifier: 
-  Name: Forget Late Joker
+  Name: Gas This Joker
   Description: 30% chip refund at the end of an unsuccessful round
   SpriteValue: {fileID: 21300000, guid: 08cfb1231313145c59f0753ab522b1df, type: 3}

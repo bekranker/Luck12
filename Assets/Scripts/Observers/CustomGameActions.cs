@@ -107,3 +107,12 @@ public struct DivideEffect
         this.Number = number;
     }
 }
+public struct RunesInitialized
+{
+    public List<Rune> Runes;
+
+    public RunesInitialized(List<Rune> runes)
+    {
+        this.Runes = runes;
+    }
+}
