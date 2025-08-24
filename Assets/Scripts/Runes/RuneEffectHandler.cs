@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using ModestTree;
+using System.Reflection;
 using UnityEngine;
 using Zenject;
 
@@ -10,26 +10,79 @@ public class RuneEffectHandler : MonoBehaviour, IInitializable
 
     [SerializeField] private float _effectDelay;
     private List<Rune> _createdRunes;
-    public void Initialize()
+    private Dictionary<RuneEffect, Delegate> _subscribers = new();
+    void Awake()
     {
         SequentialEventManager.Init(this);
-        SequentialEventManager.Subscribe<DivideEffect>(Test);
+    }
+    public void Initialize()
+    {
         EventManager.Subscribe<RunesInitialized>(GetCreatedRunes);
     }
-    void OnDestroy()
+    void OnDisable()
     {
-        SequentialEventManager.UnSubscribe<DivideEffect>(Test);
-        EventManager.UnSubscribe<RunesInitialized>(GetCreatedRunes);
+        RemoveRunes();
     }
     public void GetCreatedRunes(RunesInitialized data)
     {
         _createdRunes = data.Runes;
+
         foreach (Rune rune in data.Runes)
         {
-            Type type = rune.GetData().Effect.GetType();
-            // SequentialEventManager.Subscribe<>(rune.GetData().Effect);
+            if (rune == null || rune.GetData() == null || rune.GetData().Effect == null)
+            {
+                Debug.LogError($"Rune veya Effect eksik! Rune: {rune}");
+                continue;
+            }
+
+            RuneEffect effect = rune.GetData().Effect;
+
+            if (effect.EventType == null)
+            {
+                Debug.LogError($"Effect {effect.name} EventType tanımlı değil!");
+                continue;
+            }
+
+            Type eventType = effect.EventType;
+
+            var method = typeof(SequentialEventManager)
+                .GetMethod("Subscribe", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static)
+                .MakeGenericMethod(eventType);
+
+            // listener sarmalayıcı
+            Func<object, IEnumerator> wrapper = (obj) =>
+            {
+                effect.EffectAction(obj);
+                return null;
+            };
+
+            var del = Delegate.CreateDelegate(
+                typeof(Func<,>).MakeGenericType(eventType, typeof(IEnumerator)),
+                wrapper.Target,
+                wrapper.Method
+            );
+            _subscribers[effect] = del;
+            method.Invoke(null, new object[] { del });
         }
     }
+    public void RemoveRunes()
+    {
+        foreach (var kvp in _subscribers)
+        {
+            RuneEffect effect = kvp.Key;
+            Delegate del = kvp.Value;
+
+            Type eventType = effect.EventType;
+            var method = typeof(SequentialEventManager)
+                .GetMethod("UnSubscribe", BindingFlags.Public | BindingFlags.Static)
+                .MakeGenericMethod(eventType);
+
+            method.Invoke(null, new object[] { del });
+        }
+
+        _subscribers.Clear();
+    }
+
     private IEnumerator Test(DivideEffect data)
     {
         yield return new WaitForSeconds(_effectDelay);

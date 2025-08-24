@@ -14,6 +14,7 @@ public class Rune : MonoBehaviour
     public RuneData GetData() => _data;
     public void Initialize(RuneData data)
     {
+        _data = data;
         _sprite.sprite = data.SpriteValue;
         _name.text = data.Name;
         _description.text = data.Description;

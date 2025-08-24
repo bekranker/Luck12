@@ -12,13 +12,20 @@ public class TurnHandler : MonoBehaviour, IInitializable
     [Inject] private PieceVisualizer _pieceVisualizer;
     [Inject] private PieceHandler _pieceHandler;
     [Inject] private MatchHandler _matchHandler;
+    private int _roundIndex;
     public void Initialize()
     {
     }
 
     public void NextRound()
     {
-        StartCoroutine(NextRoundIE());
+        StartCoroutine(NextRoundAndRoundIndexIE());
+    }
+    private IEnumerator NextRoundAndRoundIndexIE()
+    {
+        yield return StartCoroutine(NextRoundIE());
+        SequentialEventManager.Raise(new OnEndOfTheRound(_roundIndex, _scoreHandler));
+        _roundIndex++;
     }
     private IEnumerator NextRoundIE()
     {

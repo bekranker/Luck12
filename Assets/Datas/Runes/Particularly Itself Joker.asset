@@ -15,3 +15,4 @@ MonoBehaviour:
   Name: Particularly Itself Joker
   Description: "Zar toplam\u0131 20\u2019yi a\u015Farsa olursa +5 \xE7ip"
   SpriteValue: {fileID: 21300000, guid: e6e588b321c924d19a04f4f3e1b5286d, type: 3}
+  Effect: {fileID: 11400000, guid: 62313f4fff3244957adc7bd300d2a349, type: 2}

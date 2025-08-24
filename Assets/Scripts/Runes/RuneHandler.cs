@@ -30,12 +30,10 @@ public class RuneHandler : MonoBehaviour, IInitializable
             AddToCreated(createdRune);
             yield return new WaitForSeconds(.1f);
         }
+        yield return new WaitForSeconds(.1f);
+
         EventManager.Raise(new RunesInitialized(_createdRunes));
     }
 
-    void OnDestroy()
-    {
-
-    }
     public void AddToCreated(Rune rune) => _createdRunes.Add(rune);
 }

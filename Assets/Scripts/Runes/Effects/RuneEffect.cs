@@ -1,5 +1,9 @@
-public abstract class RuneEffect<T>
+using System;
+using UnityEngine;
+
+[System.Serializable]
+public abstract class RuneEffect : ScriptableObject
 {
-    public T Data;
-    public abstract void EffectAction(T type);
+    public abstract Type EventType { get; }
+    public abstract void EffectAction(object data);
 }

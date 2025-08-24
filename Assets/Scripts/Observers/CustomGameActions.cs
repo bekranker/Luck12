@@ -116,3 +116,13 @@ public struct RunesInitialized
         this.Runes = runes;
     }
 }
+public struct OnEndOfTheRound
+{
+    public int RoundIndex;
+    public ScoreHandler ScoreComponent;
+    public OnEndOfTheRound(int roundIndex, ScoreHandler scoreHandler)
+    {
+        this.RoundIndex = roundIndex;
+        this.ScoreComponent = scoreHandler;
+    }
+}
