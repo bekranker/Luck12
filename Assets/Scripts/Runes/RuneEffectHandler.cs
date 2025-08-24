@@ -27,7 +27,7 @@ public class RuneEffectHandler : MonoBehaviour, IInitializable
         foreach (Rune rune in data.Runes)
         {
             Type type = rune.GetData().Effect.GetType();
-            SequentialEventManager.Subscribe<>(rune.GetData().Effect);
+            // SequentialEventManager.Subscribe<>(rune.GetData().Effect);
         }
     }
     private IEnumerator Test(DivideEffect data)
