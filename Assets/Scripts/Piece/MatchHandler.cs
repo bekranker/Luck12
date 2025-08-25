@@ -118,8 +118,7 @@ public class MatchHandler : MonoBehaviour, IInitializable
             else if (data.Calc == CalculationType.Divide)
             {
                 //Invoke Divide Events
-                SequentialEventManager.Raise(new DivideEffect(GetResult(CalculationType.Divide).MyPiece.GetData().Number));
-
+                yield return StartCoroutine(SequentialEventManager.Raise(new DivideEffect(GetResult(CalculationType.Divide).MyPiece.GetData().Number)));
             }
             counter++;
         }

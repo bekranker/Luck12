@@ -32,4 +32,11 @@ public class RuneVisualizer : MonoBehaviour, IInitializable
             rune.GetRuneUI().SetActive(false);
         }
     }
+    public Tween PunchScale(Rune rune)
+    {
+        print("punched");
+        DOTween.Kill(rune.transform);
+        rune.transform.localScale = Vector3.one;
+        return rune.transform.DOPunchScale(Vector3.one * .2f, .2f);
+    }
 }

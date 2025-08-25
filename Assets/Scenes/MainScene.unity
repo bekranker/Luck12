@@ -3833,7 +3833,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b883151e719b042038e6923f71def96c, type: 2}
   - {fileID: 11400000, guid: cb8f7a764e1cb40ab82a636840fb4628, type: 2}
   _prefab: {fileID: 7965118140490195277, guid: d9b6620bfa11645bd8372c24fda82f85, type: 3}
-  _debugRunesCount: 3
+  _debugRunesCount: 1
   _parent: {fileID: 1546226237}
 --- !u!1 &1521786308
 GameObject:

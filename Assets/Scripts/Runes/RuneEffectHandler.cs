@@ -7,10 +7,10 @@ using Zenject;
 
 public class RuneEffectHandler : MonoBehaviour, IInitializable
 {
-
+    [Inject] private RuneVisualizer _runeVisualizer;
     [SerializeField] private float _effectDelay;
     private List<Rune> _createdRunes;
-    private Dictionary<RuneEffect, Delegate> _subscribers = new();
+    private Dictionary<RuneEffectBase, Delegate> _subscribers = new();
     void Awake()
     {
         SequentialEventManager.Init(this);
@@ -35,7 +35,7 @@ public class RuneEffectHandler : MonoBehaviour, IInitializable
                 continue;
             }
 
-            RuneEffect effect = rune.GetData().Effect;
+            RuneEffectBase effect = rune.GetData().Effect;
 
             if (effect.EventType == null)
             {
@@ -52,7 +52,7 @@ public class RuneEffectHandler : MonoBehaviour, IInitializable
             // listener sarmalayıcı
             Func<object, IEnumerator> wrapper = (obj) =>
             {
-                effect.EffectAction(obj);
+                effect.EffectAction(obj, rune, _runeVisualizer);
                 return null;
             };
 
@@ -69,7 +69,7 @@ public class RuneEffectHandler : MonoBehaviour, IInitializable
     {
         foreach (var kvp in _subscribers)
         {
-            RuneEffect effect = kvp.Key;
+            RuneEffectBase effect = kvp.Key;
             Delegate del = kvp.Value;
 
             Type eventType = effect.EventType;
@@ -83,9 +83,4 @@ public class RuneEffectHandler : MonoBehaviour, IInitializable
         _subscribers.Clear();
     }
 
-    private IEnumerator Test(DivideEffect data)
-    {
-        yield return new WaitForSeconds(_effectDelay);
-        print(data.Number);
-    }
 }

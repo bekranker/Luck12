@@ -3,27 +3,18 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "ForgetLateJoker", menuName = "Rune Effect - ForgetLateJoker")]
-public class ForgetLateJoker : RuneEffect
+public class ForgetLateJoker : RuneEffect<OnEndOfTheRound>
 {
     public override Type EventType => typeof(OnEndOfTheRound);
     public int OnRound;
     public float ChipCount;
-    public override void EffectAction(object data)
+    public override void EffectAction(OnEndOfTheRound data, Rune rune, RuneVisualizer runeVisualizer)
     {
-        // OnEndOfTheRound onEndOfTheRound = (OnEndOfTheRound)data;
-        // if (onEndOfTheRound.RoundIndex % 3 != 0) return;
-        // onEndOfTheRound.ScoreComponent.AddScore(ChipCount, 1);
+
         Debug.Log("Hello from ForgetLateJoker");
+        if (data.RoundIndex % 3 == 0) return;
+        runeVisualizer.PunchScale(rune);
+        data.ScoreComponent.AddScore(ChipCount, 1);
     }
-}
-public class SharePutJoker : RuneEffect
-{
-    public override Type EventType => typeof(DivideEffect);
 
-    public override void EffectAction(object data)
-    {
-        DivideEffect divideEffect = (DivideEffect)data;
-
-        Debug.Log("Hello from Shae Put Joker");
-    }
 }

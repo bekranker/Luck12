@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ForgetLateJoker
   m_EditorClassIdentifier: 
   OnRound: 3
-  ChipCount: 2
+  ChipCount: 5

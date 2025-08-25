@@ -107,7 +107,7 @@ public struct DivideEffect
         this.Number = number;
     }
 }
-public struct RunesInitialized
+public class RunesInitialized
 {
     public List<Rune> Runes;
 
@@ -116,7 +116,7 @@ public struct RunesInitialized
         this.Runes = runes;
     }
 }
-public struct OnEndOfTheRound
+public class OnEndOfTheRound
 {
     public int RoundIndex;
     public ScoreHandler ScoreComponent;

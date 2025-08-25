@@ -27,13 +27,14 @@ public static class SequentialEventManager
     public static void Subscribe<T>(Func<T, IEnumerator> listener) => GetEvent<T>().Subscribe(listener);
     public static void UnSubscribe<T>(Func<T, IEnumerator> listener) => GetEvent<T>().Remove(listener);
 
-    public static void Raise<T>(T eventData)
+    public static IEnumerator Raise<T>(T eventData)
     {
         if (_runner == null)
         {
             Debug.LogError("SequentialEventManager: Runner ayarlanmamış! Init() çağır.");
-            return;
+            yield break;
         }
-        _runner.StartCoroutine(GetEvent<T>().Raise(eventData));
+
+        yield return GetEvent<T>().Raise(eventData);
     }
 }

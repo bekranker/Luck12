@@ -23,9 +23,9 @@ public class TurnHandler : MonoBehaviour, IInitializable
     }
     private IEnumerator NextRoundAndRoundIndexIE()
     {
-        yield return StartCoroutine(NextRoundIE());
-        SequentialEventManager.Raise(new OnEndOfTheRound(_roundIndex, _scoreHandler));
         _roundIndex++;
+        yield return StartCoroutine(NextRoundIE());
+        yield return SequentialEventManager.Raise(new OnEndOfTheRound(_roundIndex, _scoreHandler));
     }
     private IEnumerator NextRoundIE()
     {
